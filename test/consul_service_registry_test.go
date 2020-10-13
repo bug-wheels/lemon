@@ -7,7 +7,6 @@ import (
 	"lemon/cloud/serviceregistry"
 	"lemon/util"
 	"math/rand"
-	"net/http"
 	"testing"
 	"time"
 )
@@ -21,6 +20,7 @@ func TestConsulServiceRegistry(t *testing.T) {
 	ip, err := util.GetLocalIP()
 	if err != nil {
 		t.Error(err)
+		panic(err)
 	}
 
 	fmt.Println(ip)
@@ -37,12 +37,10 @@ func TestConsulServiceRegistry(t *testing.T) {
 			"message": "pong",
 		})
 	})
-	server := &http.Server{Addr: ":8010", Handler: r}
-	server.RegisterOnShutdown(func() {
-		fmt.Println(" shutdown ...")
+	err = r.Run(":8010")
+	if err != nil {
 		registryDiscoveryClient.Deregister()
-	})
-	err = server.ListenAndServe()
+	}
 }
 
 func TestConsulServiceDiscovery(t *testing.T) {

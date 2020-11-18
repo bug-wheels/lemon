@@ -1,4 +1,4 @@
-package serviceregistry
+package discovery
 
 import "lemon/cloud"
 

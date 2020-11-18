@@ -84,7 +84,7 @@ func (c consulServiceRegistry) Register(serviceInstance cloud.ServiceInstance) b
 	err := c.client.Agent().ServiceRegister(registration)
 	if err != nil {
 		fmt.Println(err)
-		return false
+		panic(err)
 	}
 
 	if c.serviceInstances == nil {

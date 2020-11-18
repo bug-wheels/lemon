@@ -1,12 +1,15 @@
 package cloud
 
 import (
-	"lemon/util"
+	"lemon/cloud/util"
 	"math/rand"
 	"strconv"
 	"time"
 )
 
+/**
+ * Represents an instance of a service in a discovery system.
+ */
 type ServiceInstance interface {
 
 	// return The unique instance ID as registered.
@@ -28,6 +31,9 @@ type ServiceInstance interface {
 	GetMetadata() map[string]string
 }
 
+/**
+ *
+ */
 type DefaultServiceInstance struct {
 	InstanceId string
 	ServiceId  string
@@ -37,11 +43,14 @@ type DefaultServiceInstance struct {
 	Metadata   map[string]string
 }
 
+/**
+ * default
+ */
 func NewDefaultServiceInstance(serviceId string, host string, port int, secure bool,
 	metadata map[string]string, instanceId string) (*DefaultServiceInstance, error) {
 
 	if len(host) == 0 {
-		localIP, err := util.GetLocalIP()
+		localIP, err := util.FindFirstNonLoopbackIP()
 		if err != nil {
 			return nil, err
 		}

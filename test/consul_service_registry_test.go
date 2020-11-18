@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"lemon/cloud"
 	"lemon/cloud/serviceregistry"
-	"lemon/util"
+	"lemon/cloud/util"
 	"math/rand"
 	"testing"
 	"time"
@@ -17,7 +17,7 @@ func TestConsulServiceRegistry(t *testing.T) {
 	token := ""
 	registryDiscoveryClient, err := serviceregistry.NewConsulServiceRegistry(host, port, token)
 
-	ip, err := util.GetLocalIP()
+	ip, err := util.FindFirstNonLoopbackIP()
 	if err != nil {
 		t.Error(err)
 		panic(err)

@@ -29,6 +29,8 @@ type ServiceInstance interface {
 
 	// return The key / value pair metadata associated with the service instance.
 	GetMetadata() map[string]string
+
+	GetCheck() *api.AgentServiceCheck
 }
 
 /**
@@ -41,6 +43,7 @@ type DefaultServiceInstance struct {
 	Port       int
 	Secure     bool
 	Metadata   map[string]string
+	Check      *api.AgentServiceCheck
 }
 
 /**
@@ -86,4 +89,8 @@ func (serviceInstance DefaultServiceInstance) IsSecure() bool {
 
 func (serviceInstance DefaultServiceInstance) GetMetadata() map[string]string {
 	return serviceInstance.Metadata
+}
+
+func (serviceInstance DefaultServiceInstance) GetCheck() *api.AgentServiceCheck {
+	return serviceInstance.Check
 }

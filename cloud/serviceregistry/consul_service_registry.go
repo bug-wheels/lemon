@@ -68,16 +68,16 @@ func (c consulServiceRegistry) Register(serviceInstance cloud.ServiceInstance) b
 	registration.Address = serviceInstance.GetHost()
 
 	// 增加consul健康检查回调函数
-	check := new(api.AgentServiceCheck)
-
-	schema := "http"
-	if serviceInstance.IsSecure() {
-		schema = "https"
-	}
-	check.HTTP = fmt.Sprintf("%s://%s:%d/actuator/health", schema, registration.Address, registration.Port)
-	check.Timeout = "1s"
-	check.Interval = "3s"
-	check.DeregisterCriticalServiceAfter = "10s" // 故障检查失败30s后 consul自动将注册服务删除
+	//check := new(api.AgentServiceCheck)
+	check := cloud.ServiceInstance.GetCheck()
+	//schema := "http"
+	//if serviceInstance.IsSecure() {
+	//	schema = "https"
+	//}
+	//check.HTTP = fmt.Sprintf("%s://%s:%d/actuator/health", schema, registration.Address, registration.Port)
+	//check.Timeout = "1s"
+	//check.Interval = "3s"
+	//check.DeregisterCriticalServiceAfter = "10s" // 故障检查失败30s后 consul自动将注册服务删除
 	registration.Check = check
 
 	// 注册服务到consul
